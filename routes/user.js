@@ -65,7 +65,7 @@ if (req.query.trackSearch) {
   });
 
   stream.on('error', (error) => {
-    // console.log(error);
+    console.log('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==',error);
     throw error;
   });
 });

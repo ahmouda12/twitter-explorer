@@ -1,3 +1,48 @@
+<div class="top-bar">
+<div class="navbar navbar-default navbar-fixed-top top-bar">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand"><img src="https://cdn2.iconfinder.com/data/icons/minimalism/512/twitter.png" alt="Twitter Logo" class="img-responsive"></a>
+            <a class="navbar-brand">Twitter Explorer</a>
+        </div>
+        <div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+                <form *ngIf="!user"  ngNativeValidate (ngSubmit)="register(registrationForm);" #registrationForm="ngForm" class="navbar-form navbar-right" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" [(ngModel)]="formInfo.username" name="username" required placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" [(ngModel)]="formInfo.password" name="password" required placeholder="Password">
+                    </div>
+                    <button (click)="login()" type="submit" class="btn btn-default">Sign In</button>
+                    <button (click)="signup()" type="submit" class="btn btn-default">Sign Up</button>
+                    <p class="error" style="color: red;"> {{ error }} </p>
+                </form>
+
+                <form *ngIf="user" class="navbar-form navbar-right">
+                  <div class="form-group">
+                  <a class="navbar-brand">Welcome {{user.username}}</a>
+                </div>
+                  <button (click)="logout()" type="submit" class="btn btn-default">Sign Out</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
 <h1 class="navbar main-page-bar">{{title}}</h1>
 <div class="container-fluid">
   <div class="row">
