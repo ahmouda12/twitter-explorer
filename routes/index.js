@@ -20,9 +20,15 @@ const client = new Twit({
 
 /* GET home page */
 router.get('/', (req, res, next) => {
-  
-
-  const stream = client.stream('statuses/sample', { });
+  res.render('index');
+let stream;
+console.log(req.query)
+if (req.query) {
+  stream = client.stream('statuses/filter', { track: req.query.trackSearch });
+}
+  else {
+    stream = client.stream('statuses/sample', { });
+  }
   // const stream = client.stream('statuses/filter', { track: "hurricane" });
 
   stream.on('tweet', function (data) {
@@ -47,7 +53,6 @@ router.get('/', (req, res, next) => {
           coordinaties: loc
         };
         res.io.emit('stream', tweet);
-        res.render('index');
       }
     }
   });
