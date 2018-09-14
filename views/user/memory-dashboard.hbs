@@ -1,0 +1,36 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5">
+      <div class="mainbar">
+        <a id="memoryId" data-id="{{memoryId}}">{{ memName }}</a>
+      </div>
+      <div class="list-container">
+        {{#if places}}
+          <div class="main-text"><a href="javascript:" class="zoomAll">Your memory's places:</a></div>
+          <ul>
+            {{#each places}}
+              <li >
+                <a href="javascript:" onclick="zoomIn({{this.location}})">{{this.name}}</a> |
+                <a href="/{{this._id}}/edit"><font font color="green">Edit</font></a> |
+                <a href="/{{this._id}}/delete"><font font color="red">Delete</font></a>
+              </li>
+            {{/each }}
+          </ul>
+          <div class="main-text"><a href="/{{user.firstname}}/{{memoryId}}/memory" target="_blank"><font font color="blue">SEE YOUR MEMORY</font></a></div>
+        {{/if}}
+        <div class="main-text"><a href="/{{memoryId}}/new"><font font color="blue">ADD NEW PLACE</font></a></div>
+        <div class="main-text"><a href="/{{userName}}/dashboard"><font font color="blue">BACK TO DASHBOARD</font></a></div>
+      </div>
+    </div>
+    <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 lealet-map">
+      <section id="map"></section>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.3.2/dist/leaflet.js"
+        integrity="sha512-2fA79E27MOeBgLjmBrtAgM/20clVSV8vJERaW/EcnnWCVGwQRazzKtQS1kIusCZv1PtaQxosDZZ0F1Oastl55w=="
+        crossorigin=""></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
+<script src='/javascripts/memory.js'></script>

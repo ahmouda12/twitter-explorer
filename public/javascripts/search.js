@@ -39,8 +39,11 @@ let markers = [];
         // markers.push(loc);
         let coords = tweet.coordinaties;
 
-      var html = '<div class="row tweet"><div class="col-md-2"><img src="' + tweet.profile_image_url + '"/></div><div class="col-md-10"><div class="names"><span class="full-name">' + tweet.username + ' </span></div><div class="contents"><span class="text">' + tweet.text + '</span></div></div></div>';
+      var html = '<div class="row tweet"><div class="col-md-2"><img src="' + tweet.profile_image_url + '"/></div><div class="col-md-10"><div class="names"><a class="full-name" href="http://twitter.com/' + tweet.username + '" target="_blank">' + tweet.username + ' </a></div><div class="contents"><span class="text">' + tweet.text + '</span></div></div></div>';
       $('#tweet-container').prepend(html);
+
+
+      // <a href="http://twitter.com/{{tweet.username}}" target="_blank" class="names">@{{tweet.username}}</a>
 
         console.log(tweet.text);
 

@@ -119,4 +119,4 @@ User.findByIdAndRemove(req.session.passport.user)
 });
 });
 
-module.exports = authRoutes;
+// module.exports = authRoutes;

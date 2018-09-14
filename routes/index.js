@@ -21,46 +21,50 @@ const client = new Twit({
 /* GET home page */
 router.get('/', (req, res, next) => {
   res.render('index');
-let stream;
-console.log(req.query)
-if (req.query) {
-  stream = client.stream('statuses/filter', { track: req.query.trackSearch });
-}
-  else {
-    stream = client.stream('statuses/sample', { });
-  }
-  // const stream = client.stream('statuses/filter', { track: "hurricane" });
+// let stream;
+// console.log("req.query: ",req.query);
+// console.log("req.query.trackSearch: ",!req.query.trackSearch);
+// let tracking = req.query.trackSearch;
+// if (req.query.trackSearch) {
+//   // console.log(true)
+//   stream = client.stream('statuses/filter', { track: tracking });
+// }
+//   // else {
+//   //   // console.log(false)
+//   //   stream = client.stream('statuses/sample', { });
+//   // }
+//   // stream = client.stream('statuses/filter', { track: "hurricane" });
 
-  stream.on('tweet', function (data) {
-    // console.log(data.text);
-    if (data.place){
-      if (data.place.bounding_box.coordinates !== null){
-        let bbox = data.place.bounding_box.coordinates;
-        let bbox2 = new BoundingBox({ minlat: bbox[0][0][1], minlon: bbox[0][0][0], maxlat: bbox[0][2][1], maxlon: bbox[0][2][0] });
-        let bboxCenter = bbox2.getCenter();
-        let loc = [bboxCenter.lat, bboxCenter.lon];
-        console.log("location:", loc);
+//   stream.on('tweet', function (data) {
+//     // console.log(data.text);
+//     if (data.place){
+//       if (data.place.bounding_box.coordinates !== null){
+//         let bbox = data.place.bounding_box.coordinates;
+//         let bbox2 = new BoundingBox({ minlat: bbox[0][0][1], minlon: bbox[0][0][0], maxlat: bbox[0][2][1], maxlon: bbox[0][2][0] });
+//         let bboxCenter = bbox2.getCenter();
+//         let loc = [bboxCenter.lat, bboxCenter.lon];
+//         console.log("location:", loc);
 
 
-        let tweet = {
-          created_at: data.created_at,
-          text: data.text,
-          username: data.user.screen_name,
-          followers_count: data.user.followers_count,
-          following_count: data.user.following_count,
-          statuses_count: data.user.statuses_count,
-          profile_image_url: data.user.profile_image_url,
-          coordinaties: loc
-        };
-        res.io.emit('stream', tweet);
-      }
-    }
-  });
+//         let tweet = {
+//           created_at: data.created_at,
+//           text: data.text,
+//           username: data.user.screen_name,
+//           followers_count: data.user.followers_count,
+//           following_count: data.user.following_count,
+//           statuses_count: data.user.statuses_count,
+//           profile_image_url: data.user.profile_image_url,
+//           coordinaties: loc
+//         };
+//         res.io.emit('stream', tweet);
+//       }
+//     }
+//   });
 
-  stream.on('error', (error) => {
-    // console.log(error);
-    throw error;
-  });
+//   stream.on('error', (error) => {
+//     // console.log(error);
+//     throw error;
+//   });
 
 });
 

@@ -1,44 +1,10 @@
-<h1 class="navbar main-page-bar">{{title}}</h1>
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5">
-      <p class="main-text">Welcome to {{title}}</p>
-      <h2 style="font-style: italic; font-weight: bold;"> Where You Map Your Memories </h2>
-      {{#if isUserLoggedIn }}
-        <p> Hello, {{ currentUserInfo.username }} </p>
-      {{/if}}
-      {{!-- <p class="main-text"> Sign in </p> --}}
-      {{#if errorMessage}}
-        <p class="error-message">
-          {{ errorMessage }}
-        </p>
-      {{/if}}
-      <form action="/" method="post">
-        <label class="edit-text" for="username-input"> Username: </label>
-        <input type="username" name="username" id="username-input" placeholder="username" class="form-control">
-        <label class="edit-text" for="password-input"> Password: </label>
-        <input type="password" name="password" id="password-input" placeholder="password" class="form-control">
-        <div class="main-text">
-          <button class="btn btn-primary"> Sign in </button>
-        </div>
-      </form>
-      {{!-- <div class="edit-text"><a href="/auth/facebook"> Sign in With Facebook </a></div> --}}
-      {{!-- <div class="edit-text"><a href="/auth/google"> Sign in With Google </a></div> --}}
-      <p class="edit-text">Don't have an account?<a href="/signup"> Create an account.</a></p>
-    </div>
-    {{!-- <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7">
-      <img class="main-img" src="/images/Map your memories.jpg" alt="Map your memories.jpg">
-    </div> --}}
-  </div>
-</div>
+{{!-- <div class="container-fluid"> --}}
+  {{!-- <div class="row"> --}}
+    {{!-- <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5"> --}}
+      {{!-- <h2 class="mainbar">Dashboard</h2> --}}
+      <p class="main-text"> Hello, {{ userName }} </p>
 
-
-
-
-
-
-
-<h1>Twitter Explorer</h1>
+        {{!-- <h1>Twitter Explorer</h1> --}}
 
 {{!-- <form action="/hms/accommodations" method="GET"> 
           <div class="row">
@@ -54,10 +20,10 @@
             </div>
           </div>
         </form> --}}
-<form action="/">
+<form action="/{{ userName }}/dashboard/">
         <input name="trackSearch" type="text">
         <button type="submit">search</button>
-        <a href="/"><font font color="green">Clear Search</font></a>
+        <a href="/{{ userName }}/dashboard/"><font font color="green">Clear Search</font></a>
 </form>
 <br>
 

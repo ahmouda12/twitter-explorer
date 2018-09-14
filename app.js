@@ -10,9 +10,12 @@ const logger       = require('morgan');
 const path         = require('path');
 const session      = require('express-session');
 const passport     = require('passport');
-var cors           = require('cors');
+const cors           = require('cors');
+const MongoStore     = require('connect-mongo')(session);
+const bcrypt         = require("bcryptjs");
 
-
+// User model
+const User = require('./models/user-model');
 
 mongoose.Promise = Promise;
 mongoose
@@ -26,9 +29,9 @@ mongoose
 const app_name = require('./package.json').name;
 const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.')[0]}`);
 
-// Passport setup
-const passportSetup = require('./config/passport');
-passportSetup(passport);
+// // Passport setup
+// const passportSetup = require('./config/passport');
+// passportSetup(passport);
 
 const app = express();
 
@@ -40,9 +43,9 @@ app.use(session({
   cookie : { httpOnly: true, maxAge: 2419200000 }
 }));
 
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(cors({credentials: true, origin: ["http://localhost:4200"]}));
+// app.use(passport.initialize());
+// app.use(passport.session());
+// app.use(cors({credentials: true, origin: ["http://localhost:4200"]}));
 
 // Socket setup
 const server = require('http').Server(app);
@@ -53,6 +56,40 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// Session Middleware
+app.use(session({
+  secret: "Explor Twitter",
+  resave: true,
+  saveUninitialized: true,
+  cookie: { maxAge: 60000000 },
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection,
+    ttl: 24 * 60 * 60 // 1 day
+  })
+}));
+
+app.use((req, res, next) => {
+  if (req.session.currentUser) {
+    res.locals.currentUserInfo = req.session.currentUser;
+    res.locals.isUserLoggedIn = true;
+  } else {
+    res.locals.isUserLoggedIn = false;
+  }
+  next();
+});
+
+// Passport Middleware
+passport.serializeUser((user, cb) => {
+  cb(null, user._id);
+});
+
+passport.deserializeUser((id, cb) => {
+  User.findById(id, (err, user) => {
+    if (err) { return cb(err); }
+    cb(null, user);
+  });
+});
 
 // Socket Middleware
 app.use(function(req, res, next){
@@ -75,14 +112,23 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 // default value for title local
 app.locals.title = 'Twitter - Explorer';
 
+app.use((req, res, next) => {
+  app.locals.user = req.session.currentUser;
+  next();
+});
+
 const index = require('./routes/index');
-const authRoutes = require('./routes/auth-routes');
+// const authRoutes = require('./routes/auth-routes');
+const authRoutes = require("./routes/auth");
+const userRoutes = require("./routes/user");
 app.use('/', index);
 app.use('/', authRoutes);
+app.use('/', userRoutes);
 
-app.use((req, res, next) => {
-  res.sendFile(__dirname + '/public/index.html');
-});
+
+// app.use((req, res, next) => {
+//   res.sendFile(__dirname + '/public/index.html');
+// });
 
 // module.exports = app;
 module.exports = {app: app, server: server};
