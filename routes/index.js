@@ -20,7 +20,7 @@ const client = new Twit({
 
 /* GET home page */
 router.get('/', (req, res, next) => {
-  res.render('index');
+  
 
   const stream = client.stream('statuses/sample', { });
   // const stream = client.stream('statuses/filter', { track: "hurricane" });
@@ -47,6 +47,7 @@ router.get('/', (req, res, next) => {
           coordinaties: loc
         };
         res.io.emit('stream', tweet);
+        res.render('index');
       }
     }
   });
