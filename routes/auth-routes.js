@@ -1,6 +1,6 @@
 const express    = require('express');
 const passport   = require('passport');
-const bcrypt     = require('bcrypt');
+const bcrypt     = require('bcryptjs');
 
 // Our user model
 const User       = require('../models/user-model');
