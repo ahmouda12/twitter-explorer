@@ -29,11 +29,11 @@ let tracking = req.query.trackSearch;
 //   // console.log(true)
 //   stream = client.stream('statuses/filter', { track: tracking });
 // }
-  // else {
-  //   // console.log(false)
-    stream = client.stream('statuses/sample', { });
-  // }
-  // stream = client.stream('statuses/filter', { track: "hurricane" });
+//   else {
+//   //   // console.log(false)
+//     stream = client.stream('statuses/sample', { });
+//   }
+  stream = client.stream('statuses/filter', { track: "hurricane" });
 
   stream.on('tweet', function (data) {
     // console.log(data.text);
