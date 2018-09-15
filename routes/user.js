@@ -19,14 +19,14 @@ userRoutes.get('/:userName/dashboard', (req, res, next) => {
   res.render('user/dashboard', { userName });
 
   let stream;
-  console.log("req.query: ",req.query);
-  console.log("req.query.trackSearch: ",req.query.trackSearch);
+  // console.log("req.query: ",req.query);
+  // console.log("req.query.trackSearch: ",req.query.trackSearch);
   let tracking = req.query.trackSearch;
   if (req.query.trackSearch) {
   // console.log(true)
   stream = client.stream('statuses/filter', { track: req.query.trackSearch });
   }
-  if (req.query.trackSearch === undefined){
+  else {
     // console.log(false)
     stream = client.stream('statuses/sample', { });
   }
@@ -40,7 +40,7 @@ userRoutes.get('/:userName/dashboard', (req, res, next) => {
         let bbox2 = new BoundingBox({ minlat: bbox[0][0][1], minlon: bbox[0][0][0], maxlat: bbox[0][2][1], maxlon: bbox[0][2][0] });
         let bboxCenter = bbox2.getCenter();
         let loc = [bboxCenter.lat, bboxCenter.lon];
-        console.log("location:", loc);
+        // console.log("location:", loc);
 
 
         let tweet = {
@@ -59,7 +59,7 @@ userRoutes.get('/:userName/dashboard', (req, res, next) => {
   });
 
   stream.on('error', (error) => {
-    console.log('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==',error);
+    // console.log(error);
     throw error;
   });
 });

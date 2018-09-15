@@ -25,7 +25,7 @@ router.get('/', (req, res, next) => {
         let bbox2 = new BoundingBox({ minlat: bbox[0][0][1], minlon: bbox[0][0][0], maxlat: bbox[0][2][1], maxlon: bbox[0][2][0] });
         let bboxCenter = bbox2.getCenter();
         let loc = [bboxCenter.lat, bboxCenter.lon];
-        console.log("location:", loc);
+        // console.log("location:", loc);
 
         let tweet = {
           created_at: data2.created_at,
