@@ -34,7 +34,10 @@ let markers = [];
   L.control.layers(baseMaps, overlayMaps).addTo(map);
 
   // Add markers to the map
-  const socket = io('//twitter-explorer.herokuapp.com');
+  // const socket = io('//localhost:3000');
+  const socket = io('twitter-explorer.herokuapp.com');
+   //localhost:3000
+   //twitter-explorer.herokuapp.com
        socket.on('stream', function(tweet){
         // markers.push(loc);
         let coords = tweet.coordinaties;

@@ -20,20 +20,22 @@ const client = new Twit({
 
 /* GET home page */
 router.get('/', (req, res, next) => {
+  console.log("**&%&&^&**%*&^&**%*&^&*%*&&*^&*&%*%&*%*&^*&%*&^*&%= ", req.query.trackSearch)
   res.render('index');
 let stream;
 console.log("req.query: ",req.query);
 console.log("req.query.trackSearch: ",!req.query.trackSearch);
-let tracking = req.query.trackSearch;
-// if (req.query.trackSearch) {
-//   // console.log(true)
-//   stream = client.stream('statuses/filter', { track: tracking });
-// }
-//   else {
-//   //   // console.log(false)
-//     stream = client.stream('statuses/sample', { });
-//   }
-  stream = client.stream('statuses/filter', { track: "hurricane" });
+// let tracking = req.query.trackSearch;
+if (req.query.trackSearch) {
+  // console.log(true)
+console.log("======================================================================== ", req.query.trackSearch)
+  stream = client.stream('statuses/filter', { track: `${req.query.trackSearch}` });
+}
+  else {
+  //   // console.log(false)
+    stream = client.stream('statuses/sample', { });
+  }
+  // stream = client.stream('statuses/filter', { track: "hurricane" });
 
   stream.on('tweet', function (data) {
     // console.log(data.text);
