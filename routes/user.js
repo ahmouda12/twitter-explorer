@@ -20,13 +20,13 @@ userRoutes.get('/:userName/dashboard', (req, res, next) => {
 
   let stream;
   console.log("req.query: ",req.query);
-  console.log("req.query.trackSearch: ",!req.query.trackSearch);
+  console.log("req.query.trackSearch: ",req.query.trackSearch);
   let tracking = req.query.trackSearch;
   if (req.query.trackSearch) {
   // console.log(true)
   stream = client.stream('statuses/filter', { track: req.query.trackSearch });
   }
-  else {
+  if (req.query.trackSearch === undefined){
     // console.log(false)
     stream = client.stream('statuses/sample', { });
   }

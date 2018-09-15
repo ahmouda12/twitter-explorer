@@ -155,19 +155,14 @@ authRoutes.get('/edit', (req, res, next) => {
 	});
 });
 
-authRoutes.get('/delete', (req, res, next) => {
+authRoutes.post('/delete', (req, res, next) => {
   console.log(req.session.currentUser._id)
-User.findByIdAndRemove(req.session.currentUser._id);
-if (error) {next(error);} 
-		else {
-			User.remove({ _id: req.session.currentUser._id }, (error, user) => {
-				if (error) {
-					next(error);
-        } 
-        
-        else {res.redirect('/');}
-			});
-		}
+  User.findByIdAndRemove(req.session.currentUser._id, (error, user) => {
+  if (error) {next(error);
+  return;} 
+  else {res.redirect('/');}
+	
+});
 });
 
 module.exports = authRoutes;
