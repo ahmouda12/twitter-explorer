@@ -15,8 +15,8 @@ function initmap() {
   });
 
   // Add markers to the map
-  const socket = io('//localhost:3000');
-  // const socket = io('twitter-explorer.herokuapp.com');
+  // const socket = io('//localhost:3000');
+  const socket = io('twitter-explorer.herokuapp.com');
   socket.on('stream2', function(tweet){
     let coords = tweet.coordinaties;
     // console.log(tweet.text);
