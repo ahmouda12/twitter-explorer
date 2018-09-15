@@ -5,12 +5,6 @@ const BoundingBox = require('boundingbox');
 const express     = require('express');
 const userRoutes  = express.Router();
 const User        = require('../models/user-model');
-// const Place       = require('../models/place');
-// const Memory      = require('../models/memory');
-
-// const express = require('express');
-// const router  = express.Router();
-
 
 const client = new Twit({
   consumer_key:         process.env.TWITTER_CONSUMER_KEY, 
@@ -20,14 +14,14 @@ const client = new Twit({
 });
 
 userRoutes.get('/:userName/dashboard', (req, res, next) => {
-	const userName = req.session.currentUser.username;
+	const userName = (req.session.currentUser) ? req.session.currentUser.username : '';
 	// console.log(req.session.currentUser.username)
   res.render('user/dashboard', { userName });
 
 	let stream;
 console.log("req.query: ",req.query);
 console.log("req.query.trackSearch: ",!req.query.trackSearch);
-// let tracking = req.query.trackSearch;
+let tracking = req.query.trackSearch;
 if (req.query.trackSearch) {
   // console.log(true)
   stream = client.stream('statuses/filter', { track: req.query.trackSearch });

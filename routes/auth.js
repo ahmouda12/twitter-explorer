@@ -11,8 +11,8 @@ const bcryptSalt = 10;
 
 // Signup
 authRoutes.get('/signup', (req, res, next) => {
-  res.render('auth/signup', {
-    errorMessage: ''
+  res.render('index', {
+    errorMessage2: ''
   });
 });
 
@@ -21,8 +21,8 @@ authRoutes.post('/signup', (req, res, next) => {
   const {username, password} = req.body;
 
   if (username === '' || password === '') {
-    res.render('auth/signup', {
-      errorMessage: 'Enter both username and password to sign up.'
+    res.render('index', {
+      errorMessage2: 'Enter both username and password to sign up'
     });
     return;
   }
@@ -34,8 +34,8 @@ authRoutes.post('/signup', (req, res, next) => {
     }
 
     if (existingUser !== null) {
-      res.render('auth/signup', {
-        errorMessage: `The username ${username} is already in use.`
+      res.render('index', {
+        errorMessage2: `The username ${username} is already in use`
       });
       return;
     }
@@ -52,30 +52,31 @@ authRoutes.post('/signup', (req, res, next) => {
 
     theUser.save((err) => {
       if (err) {
-        res.render('auth/signup', {
-          errorMessage: 'Something went wrong. Try again later.'
+        res.render('index', {
+          errorMessage2: 'Something went wrong. Try again later'
         });
         return;
       }
-      res.redirect('/');
+      req.session.currentUser = theUser;
+      res.redirect(`/${theUser.username}/dashboard`);
     });
   });
 });
 
 // Login
-authRoutes.get('/', (req, res, next) => {
+authRoutes.get('/login', (req, res, next) => {
   res.render('index', {
     errorMessage: ''
   });
 });
 
-authRoutes.post('/', (req, res, next) => {
+authRoutes.post('/login', (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
 
   if (username === '' || password === '') {
     res.render('index', {
-      errorMessage: 'Enter both username and password to log in.'
+      errorMessage: 'Enter both username and password to log in'
     });
     return;
   }
@@ -83,14 +84,14 @@ authRoutes.post('/', (req, res, next) => {
   User.findOne({ username: username }, (err, theUser) => {
     if (err || theUser === null) {
       res.render('index', {
-        errorMessage: `There isn't an account with username ${username}.`
+        errorMessage: `There isn't an account with username ${username}`
       });
       return;
     }
 
     if (!bcrypt.compareSync(password, theUser.password)) {
       res.render('index', {
-        errorMessage: 'Invalid password.'
+        errorMessage: 'Invalid password'
       });
       return;
     }
@@ -117,29 +118,56 @@ authRoutes.get('/logout', (req, res, next) => {
   });
 });
 
-// authRoutes.post('/edit', (req, res, next) => {
-//   User.findById(req.session.passport.user, (error, place) => {
-//     if (error) { next(); } 
-// 		else {
-//     user.username = req.body.username;
-//     const salt     = bcrypt.genSaltSync(10);
-//     const hashPass = bcrypt.hashSync(req.body.password, salt);
-//     user.password = hashPass;
-//     }
-//     user.save((error) => {
-//       const username = user.username;
-//       if (error) { next(error); } 
-//       else { res.redirect(`/${username}/memory-dashboard`); }
-// 			});
-//     };
-//   });
-// });
+authRoutes.post('/edit', (req, res, next) => {
+  User.findById(req.session.currentUser._id, (error, user) => {
+    if (error) { next(); } 
+		else {
+    user.username = req.body.username;
+    const salt     = bcrypt.genSaltSync(10);
+    const hashPass = bcrypt.hashSync(req.body.password, salt);
+    user.password = hashPass;
+    }
+    user.save((error) => {
+      // req.session.currentUser = theUser;
+      const username = req.body.username;
+      const password = req.body.password;
+      if (username === '' || password === '') { 
+        res.render('auth/edit', {
+          errorMessage: 'Enter both username and password'
+        });
+        return; } 
+      else { res.redirect(`/${username}/dashboard`); }
+			});
+    });
+});
 
-// authRoutes.get('/delete', (req, res, next) => {
-// User.findByIdAndRemove(req.session.passport.user)
-// .then(() => {
-//   res.status(200).json({ message: 'User Removed' });
-// });
-// });
+authRoutes.get('/edit', (req, res, next) => {
+  const id = req.session.currentUser._id;
+  const userName = req.session.currentUser.username;
+  const password = req.session.currentUser.password;
+  
+	User.findById(id, (error, user) => {
+		if (error) {
+			next(error);
+		} else {
+			res.render('auth/edit', { password, userName });
+		}
+	});
+});
+
+authRoutes.get('/delete', (req, res, next) => {
+  console.log(req.session.currentUser._id)
+User.findByIdAndRemove(req.session.currentUser._id);
+if (error) {next(error);} 
+		else {
+			User.remove({ _id: req.session.currentUser._id }, (error, user) => {
+				if (error) {
+					next(error);
+        } 
+        
+        else {res.redirect('/');}
+			});
+		}
+});
 
 module.exports = authRoutes;

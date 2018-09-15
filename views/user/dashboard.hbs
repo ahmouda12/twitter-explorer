@@ -1,44 +1,37 @@
-{{!-- <div class="container-fluid"> --}}
-  {{!-- <div class="row"> --}}
-    {{!-- <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5"> --}}
-      {{!-- <h2 class="mainbar">Dashboard</h2> --}}
-      <p class="main-text"> Hello, {{ userName }} </p>
-
-        {{!-- <h1>Twitter Explorer</h1> --}}
-
-{{!-- <form action="/hms/accommodations" method="GET"> 
-          <div class="row">
-            <!-- <div class="col-xs-6 col-md-4"> -->
-              <div class="input-group search-bar">
-                <input type="text" name="word" class="form-control" placeholder="Search" id="txtSearch"/>
-                <div class="input-group-btn">
-                  <button class="btn btn-primary" type="submit">
-                    <span class="glyphicon glyphicon-search"></span>
-                  </button>
-                </div>
-              <!-- </div> -->
-            </div>
-          </div>
-        </form> --}}
-<form action="/{{ userName }}/dashboard/">
-        <input name="trackSearch" type="text">
-        <button type="submit">search</button>
-        <a href="/{{ userName }}/dashboard/"><font font color="green">Clear Search</font></a>
-</form>
-<br>
-
+<nav class="navbar" style="background-color: #090909;">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand bar-img"><img src="https://cdn2.iconfinder.com/data/icons/minimalism/512/twitter.png" alt="Twitter Logo" class="img-responsive"></a>
+      <a class="navbar-brand" style="color: #2daae1;">Twitter Explorer</a>
+    </div>
+    <a class="navbar-brand navbar-right" href="/logout"><font font color="blue" style="color: #2daae1; padding-right: 60px;">Sign out</font></a>
+    <a class="navbar-brand navbar-right"  href="/edit" style="color: #ebebeb; padding-right: 20px;"> {{ userName }} </a>
+    <p class="navbar-brand navbar-right" style="color: #ebebeb; padding-right: 5px;">Hello,</p>
+  </div>
+</nav>
 
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-9 col-sm-9 col-xs-9 col-lg-9">
-      {{!-- <button onclick="toggleHeatmap()">Toggle Heatmap</button> --}}
-      <div id="map"></div>
+      <div class="container-map">
+        <div id="map_container"></div>
+	      <div id="map"></div>
+	    </div>
     </div>
     <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3">
-      <h2>Tweets</h2>
-      <div class= 'container'>
-      <container id='tweet-container'></container>
-      {{!-- <ul class="tweets"></ul> --}}
+      <form action="/{{ userName }}/dashboard/">
+        <div class="input-group">
+            <input name="trackSearch" type="text" class="form-control" placeholder="Search&hellip;">
+            <span class="input-group-btn">
+              <button type="submit" class="btn btn-default color2">Go</button>
+            </span>
+        </div>
+        <div style="padding-top: 5px;">
+          <a href="/{{ userName }}/dashboard/"><font font color="#2daae1">Clear Search</font></a>
+        </div>
+      </form>
+      <div class= 'container-tweet'>
+        <container id='tweet-container'></container>
       </div>
     </div>
   </div>
@@ -46,17 +39,11 @@
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  {{!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> --}}
-  {{!-- <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbBJPvYIaR5ozIx_0-uWiGeO9cK4IxHww&libraries=visualization">
-  </script> --}}
   <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
   <script src="https://unpkg.com/leaflet@1.3.2/dist/leaflet.js"
         integrity="sha512-2fA79E27MOeBgLjmBrtAgM/20clVSV8vJERaW/EcnnWCVGwQRazzKtQS1kIusCZv1PtaQxosDZZ0F1Oastl55w=="
         crossorigin=""></script>
   <script src="https://rawgit.com/Asymmetrik/leaflet-d3/master/dist/leaflet-d3.js" charset="utf-8"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
-  
   {{!-- <script src="/javascripts/leaflet-heat.js"></script> --}}
-
 <script type="text/javascript" src="/javascripts/search.js"></script>

@@ -5,7 +5,6 @@ const router  = express.Router();
 const Twit = require('twit');
 const BoundingBox = require('boundingbox');
 
-
 const client = new Twit({
   consumer_key:         process.env.TWITTER_CONSUMER_KEY, 
   consumer_secret:      process.env.TWITTER_CONSUMER_SECRET, 
@@ -13,58 +12,38 @@ const client = new Twit({
   access_token_secret:  process.env.TWITTER_ACCESS_TOKEN_SECRET
 });
 
-// router.get('/search', (req, res, next) => {
-//   // search2.word = req.body.word;
-//   console.log(req);
-// });
-
 /* GET home page */
 router.get('/', (req, res, next) => {
-  console.log("**&%&&^&**%*&^&**%*&^&*%*&&*^&*&%*%&*%*&^*&%*&^*&%= ", req.query.trackSearch)
   res.render('index');
-let stream;
-console.log("req.query: ",req.query);
-console.log("req.query.trackSearch: ",!req.query.trackSearch);
-// let tracking = req.query.trackSearch;
-if (req.query.trackSearch) {
-  // console.log(true)
-console.log("======================================================================== ", req.query.trackSearch)
-  stream = client.stream('statuses/filter', { track: `${req.query.trackSearch}` });
-}
-  else {
-  //   // console.log(false)
-    stream = client.stream('statuses/sample', { });
-  }
-  // stream = client.stream('statuses/filter', { track: "hurricane" });
+  const stream = client.stream('statuses/sample', { });
 
-  stream.on('tweet', function (data) {
+  stream.on('tweet', function (data2) {
     // console.log(data.text);
-    if (data.place){
-      if (data.place.bounding_box.coordinates !== null){
-        let bbox = data.place.bounding_box.coordinates;
+    if (data2.place){
+      if (data2.place.bounding_box.coordinates !== null){
+        let bbox = data2.place.bounding_box.coordinates;
         let bbox2 = new BoundingBox({ minlat: bbox[0][0][1], minlon: bbox[0][0][0], maxlat: bbox[0][2][1], maxlon: bbox[0][2][0] });
         let bboxCenter = bbox2.getCenter();
         let loc = [bboxCenter.lat, bboxCenter.lon];
         console.log("location:", loc);
 
-
         let tweet = {
-          created_at: data.created_at,
-          text: data.text,
-          username: data.user.screen_name,
-          followers_count: data.user.followers_count,
-          following_count: data.user.following_count,
-          statuses_count: data.user.statuses_count,
-          profile_image_url: data.user.profile_image_url,
+          created_at: data2.created_at,
+          text: data2.text,
+          username: data2.user.screen_name,
+          followers_count: data2.user.followers_count,
+          following_count: data2.user.following_count,
+          statuses_count: data2.user.statuses_count,
+          profile_image_url: data2.user.profile_image_url,
           coordinaties: loc
         };
-        res.io.emit('stream', tweet);
+        res.io.emit('stream2', tweet);
       }
     }
   });
 
   stream.on('error', (error) => {
-    console.log("-----=======-----", error);
+    // console.log(error);
     throw error;
   });
 

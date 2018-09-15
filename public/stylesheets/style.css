@@ -1,22 +1,33 @@
 body {
-  padding: 10px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #262626; }
 
 a {
   color: #00B7FF; }
 
-#map {
+.container-map {
   width: 100%;
-  height: 500px; }
+  margin: 0 auto;
+  margin-top: 0px; }
+
+#map_container {
+  position: relative; }
+
+#map {
+  height: 500px;
+  overflow: hidden;
+  padding-bottom: 22.25%;
+  padding-top: 30px;
+  position: relative; }
 
 .gps_ring {
-  border: 3px solid red;
+  border: 3px solid #2daae1;
   -webkit-border-radius: 30px;
   height: 18px;
   width: 18px;
   -webkit-animation: pulsate 1s ease-out;
   -webkit-animation-iteration-count: infinite;
-  /*opacity: 0.0*/ }
+  background: #2daae1; }
 
 @-webkit-keyframes pulsate {
   0% {
@@ -28,7 +39,7 @@ a {
     -webkit-transform: scale(1.2, 1.2);
     opacity: 0.0; } }
 
-.container {
+.container-tweet {
   height: 500px;
   width: 100%;
   overflow: auto; }
@@ -37,49 +48,71 @@ a {
   padding: 10px 0px;
   border: 1px solid rgba(50, 51, 50, 0.5);
   margin: 10px 0px;
-  background-color: #fdfdfd;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px; }
+  background-color: #090909;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px; }
 
-.names {
-  margin-left: 10px;
-  font-weight: bold; }
-
-.contents {
+.tweet-img {
   margin-left: 10px; }
 
-.ping {
-  fill: red;
-  stroke-width: .3px; }
+.name {
+  margin-bottom: 0;
+  margin-left: 10px;
+  font-weight: bold;
+  font-size: 14px;
+  /* font-size: 3vw; */ }
 
-input:focus {
-  outline: none; }
+.names {
+  margin-bottom: 0;
+  margin-left: 10px;
+  font-weight: bold;
+  font-size: 14px;
+  color: gray;
+  /* font-size: 3vw; */ }
 
-.ng-touched {
-  border-color: blue; }
+.text {
+  margin: 5px 10px 0 10px;
+  font-size: 14px;
+  line-height: normal;
+  color: #ebebeb; }
 
-.ng-touched.ng-invalid {
-  border-color: red; }
+.numbers {
+  color: #2fc4ff;
+  font-weight: 500; }
 
-.ng-touched.ng-valid {
-  border-color: green; }
-
-.message {
-  margin-top: 10px;
-  font-size: 20px;
-  color: blue; }
+.search-bar {
+  width: 76%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 16px;
+  /* margin-bottom: 5px;  */ }
 
 .top-bar {
-  margin-bottom: 125px; }
+  height: 80px;
+  padding: 5px 20px;
+  background-color: #090909;
+  border-color: #090909; }
 
 .bar-img {
   width: 50px; }
 
-.navbar-brand > img {
-  max-height: 100%;
-  height: 100%;
-  -o-object-fit: contain;
-  object-fit: contain; }
+.color {
+  background-color: #262626; }
+
+.color2 {
+  background-color: #2daae1; }
+
+.centered-form {
+  margin-top: 60px; }
+
+.centered-form .panel {
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px; }
+
+.twitter-img {
+  width: 250px;
+  margin-left: auto;
+  margin-right: auto; }
 
 /*# sourceMappingURL=style.css.map */
