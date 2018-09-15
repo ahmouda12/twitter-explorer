@@ -18,14 +18,14 @@ userRoutes.get('/:userName/dashboard', (req, res, next) => {
 	// console.log(req.session.currentUser.username)
   res.render('user/dashboard', { userName });
 
-	let stream;
-console.log("req.query: ",req.query);
-console.log("req.query.trackSearch: ",!req.query.trackSearch);
-let tracking = req.query.trackSearch;
-if (req.query.trackSearch) {
+  let stream;
+  console.log("req.query: ",req.query);
+  console.log("req.query.trackSearch: ",!req.query.trackSearch);
+  let tracking = req.query.trackSearch;
+  if (req.query.trackSearch) {
   // console.log(true)
   stream = client.stream('statuses/filter', { track: req.query.trackSearch });
-}
+  }
   else {
     // console.log(false)
     stream = client.stream('statuses/sample', { });

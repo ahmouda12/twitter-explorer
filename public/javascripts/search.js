@@ -41,7 +41,7 @@ function initmap() {
   // var html = '<div class="row tweet"><div class="col-md-2"><img src="' + tweet.profile_image_url + '"/></div><div class="col-md-10"><div class="names"><a class="full-name" href="http://twitter.com/' + tweet.username + '" target="_blank">' + tweet.username + ' </a></div><div class="contents"><span class="text">' + tweet.text + '</span></div></div></div>';
   // $('#tweet-container').prepend(html);
 
-  const html = '<div class="row tweet"><img src="' + tweet.profile_image_url + '" class="tweet-img"><a class="name" href="http://twitter.com/' + tweet.username + '" target="_blank">' + tweet.username + ' </a><p class="names">Tweets: <span class="numbers">' + tweet.statuses_count + '</span></p><p class="names">Followers: <span class="numbers">' + tweet.followers_count + '</span></p><div class="text"><span>' + tweet.text + '</span></div></div>';
+  const html = '<div class="row tweet"><img src="' + tweet.profile_image_url + '" class="tweet-img"><a class="name" href="https://twitter.com/' + tweet.username + '" target="_blank">' + tweet.username + ' </a><p class="names">Tweets: <span class="numbers">' + tweet.statuses_count + '</span></p><p class="names">Followers: <span class="numbers">' + tweet.followers_count + '</span></p><div class="text"><span>' + tweet.text + '</span></div></div>';
   $('#tweet-container').prepend(html);
 
 // console.log(tweet.text);
